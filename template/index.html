@@ -1,0 +1,819 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Supermarket</title>
+    <!-- Tailwind CSS CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0-beta1/dist/css/bootstrap.min.css">
+    <!-- _____ Slick Slider _____ -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.css">
+    <!-- Link to the JavaScript file -->
+    <script src="main.js" defer></script>
+</head>
+<body class="bg-gray-100">
+<!-- Header Section -->
+<header class="bg-[#bab2b2] shadow-md py-1">
+  <div class="container mx-auto flex items-center justify-between">
+      
+      <!-- Logo (with Image) -->
+      <div class="flex items-center space-x-2">
+          <img src="/static/images/images.png" alt="Groco Logo" class="h-10"> <!-- Replace with the actual image path -->
+      </div>
+
+      <!-- Search Bar (visible on desktop) -->
+      <div class="hidden md:flex flex-1 mx-4 pr-10">
+          <input type="text" placeholder="Search for products..." class="w-full p-2 rounded-md border border-gray-300">
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="hidden md:flex space-x-1 pt-3">
+          <a href="#" class="hover:text-gray-900 text-gray-600">Home</a>
+          <a href="products.html" class="hover:text-gray-900 text-gray-600">Products</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Features</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Categories</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Reviews</a>
+      </nav>
+
+      <!-- Mobile Menu Toggle -->
+      <button id="menuToggle" class="p-2 bg-gray-100 rounded-full hover:bg-gray-200 md:hidden">
+          <i class="fas fa-bars text-gray-600"></i>
+      </button>
+  </div>
+
+  <!-- Mobile Navigation Menu (Initially Hidden) -->
+  <div id="mobileMenu" class="hidden md:hidden bg-white shadow-md">
+      <nav class="flex flex-col space-y-2 p-4">
+          <a href="#" class="hover:text-gray-900 text-gray-600">Home</a>
+          <a href="products.html" class="hover:text-gray-900 text-gray-600">Products</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Features</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Categories</a>
+          <a href="#" class="hover:text-gray-900 text-gray-600">Reviews</a>
+      </nav>
+      
+      <!-- Search Bar (visible on mobile) -->
+      <div class="p-4">
+          <input type="text" placeholder="Search for products..." class="w-full p-2 rounded-md border border-gray-300">
+      </div>
+  </div>
+</header>
+
+<script>
+  const menuToggle = document.getElementById('menuToggle');
+  const mobileMenu = document.getElementById('mobileMenu');
+
+  menuToggle.addEventListener('click', () => {
+      mobileMenu.classList.toggle('hidden');
+  });
+</script>
+
+
+
+<style>
+    /* Optional: Slider styles for better presentation */
+    .slider-container {
+        position: relative;
+        width: 100%;
+        overflow: hidden;
+    }
+    .slider-item {
+        display: none;
+        transition: opacity 0.5s ease-in-out;
+        
+    }
+    .slider-item.active {
+        display: flex;
+        opacity: 1;
+    }
+    /* styles.css */
+
+    body {
+        margin: 0;
+        font-family: Arial, sans-serif;
+    }
+
+    /* styles.css */
+
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+.gallery {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 10px;
+    padding: 20px;
+}
+
+.gallery-item {
+    overflow: hidden;
+    border-radius: 8px;
+    transition: transform 0.3s;
+}
+
+.gallery-item img {
+    width: 100%;
+    display: block;
+    cursor: pointer;
+}
+
+.gallery-item:hover {
+    transform: scale(1.05);
+}
+
+/* Lightbox styles */
+.lightbox {
+    display: none;
+    position: fixed;
+    z-index: 1000;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0, 0, 0, 0.9);
+    justify-content: center;
+    align-items: center;
+}
+
+.lightbox-content {
+    max-width: 80%;
+    max-height: 80%;
+}
+
+.close {
+    position: absolute;
+    top: 20px;
+    right: 40px;
+    color: #fff;
+    font-size: 40px;
+    cursor: pointer;
+}
+
+/* Next and previous buttons */
+.prev, .next {
+    cursor: pointer;
+    position: absolute;
+    top: 50%;
+    width: auto;
+    padding: 16px;
+    margin-top: -22px;
+    color: white;
+    font-weight: bold;
+    font-size: 24px;
+    transition: 0.3s;
+    user-select: none;
+}
+
+.prev {
+    left: 10px;
+}
+
+.next {
+    right: 10px;
+}
+
+.prev:hover, .next:hover {
+    color: #ddd;
+}
+
+
+
+  /* =======================================
+    Slider
+    ====================================*/
+    .slick-slider button {
+        position: absolute;
+        top: 32%;
+        outline: "none";
+        border: none;
+        width: 40px;
+        height: 40px;
+        border-radius: 35px;
+        background-color: orange;
+        color: white;
+        z-index: 99;
+    }
+    
+    .slick-slider .slick-prev {
+        left: -30px;
+        font-size: 0;
+    }
+    
+    .slick-slider .slick-prev::before {
+        content: '<';
+        line-height: 1;
+        font-size: 25px;
+    }
+    
+    
+    
+    .slick-slider .slick-next {
+        right: -30px;
+        font-size: 0;
+    }
+    
+    .slick-slider .slick-next::after {
+        content: '>';
+        line-height: 1;
+        font-size: 25px;
+    }
+    
+    
+    
+    .slick-dots{
+        text-align: center;
+    }
+    
+    .slick-dots li{
+        display: inline-block;
+        padding: 1px;
+        background-color: #ccc;
+        margin: 10px 5px;
+        width: 10px;
+        height: 10px;
+        border-radius: 10px;
+        cursor: pointer;
+    }
+    
+    .slick-dots button{
+        display: none;
+    }
+    
+    .slick-dots li.slick-active{
+        background:#ffc107;
+    }
+    
+    .slick-slider img{
+        width: 100%;
+        height: 250px;
+    }
+    
+    
+    
+    .slick-slide {
+        padding:40px 0;
+        position: relative;
+        height:auto !important;
+        opacity: 0.5;
+        transition: all 900ms ease;
+    }
+    
+    .slick-current {
+        opacity: 1;
+        transform: scale(1.2);
+        z-index: 99;
+        box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+    } 
+    
+    .slick-slide .xyz{
+        opacity: 0;
+    }
+    
+    .slick-current .xyz{
+        opacity: 1;
+    }
+
+    a{
+        text-decoration: none !important;
+        font-size: 25px;
+        font-weight: bold;
+        font-style: italic;
+        position: relative;
+        top: -10px;
+        color: #fff;
+        padding: 5px 13px;
+        /* border: 2px solid #7c4a21; */
+        background-color: transparent;
+        transition: 0.4s;
+        border-radius: 5px;
+    }
+</style>
+
+    <!-- Slider Section -->
+<section class="relative overflow-hidden slider-container w-full">
+    <!-- Slide 1 -->
+    <div class="slider-item h-screen flex items-center justify-center text-white bg-cover bg-center transition-transform duration-500"
+    style="background-image: url('/static/images/bg.png');">
+   <div class="bg-black bg-opacity-50 p-4 rounded text-center">
+       <h2 class="text-3xl md:text-4xl font-bold">Shop the Best Deals Today!</h2>
+       <p class="mt-2">Find everything you need in one place.</p>
+       <a href="#" class="mt-6 inline-block bg-white text-green-600 font-semibold py-3 px-10 rounded-full">
+           Shop Now
+       </a>
+   </div>
+</div>
+
+    <!-- Slide 2 -->
+    <div class="slider-item h-screen flex items-center justify-center text-white bg-cover bg-center transition-transform duration-500"
+    style="background-image: url('/static/images/bg.png1');">
+   <div class="bg-black bg-opacity-50 p-4 rounded text-center">
+       <h2 class="text-3xl md:text-4xl font-bold">Shop the Best Deals Today!</h2>
+       <p class="mt-2">Find everything you need in one place.</p>
+       <a href="#" class="mt-6 inline-block bg-white text-green-600 font-semibold py-3 px-10 rounded-full">
+           Shop Now
+       </a>
+   </div>
+</div>
+
+    <!-- Slide 3 -->
+    <div class="slider-item h-screen flex items-center justify-center text-white bg-cover bg-center transition-transform duration-500"
+    style="background-image: url('/static/images/bg.png2');">
+   <div class="bg-black bg-opacity-50 p-4 rounded text-center">
+       <h2 class="text-3xl md:text-4xl font-bold">Shop the Best Deals Today!</h2>
+       <p class="mt-2">Find everything you need in one place.</p>
+       <a href="#" class="mt-6 inline-block bg-white text-green-600 font-semibold py-3 px-10 rounded-full">
+           Shop Now
+       </a>
+   </div>
+</div>
+
+
+    <!-- Navigation Buttons -->
+    <button id="prev" class="absolute left-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-300 transition">❮</button>
+    <button id="next" class="absolute right-4 top-1/2 transform -translate-y-1/2 bg-white p-2 rounded-full shadow hover:bg-gray-300 transition">❯</button>
+</section>
+
+<!-- Features Section -->
+<section class="bg-white py-12">
+  <div class="container mx-auto text-center">
+      <h2 class="text-4xl font-bold text-gray-800 mb-8">Our Features</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Feature 1: Fresh and Organic -->
+          <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+              <img src="/static/images/fruits.png" alt="Fresh and Organic" class="w-full h-40 object-cover mb-4 rounded transform hover:scale-105 transition-transform duration-300">
+              <i class="fas fa-leaf text-green-600 text-4xl mb-4"></i>
+              <h3 class="text-2xl font-bold mb-2">Fresh and Organic</h3>
+              <p class="text-gray-600">We offer a wide range of fresh, organic products, straight from farms to your table.</p>
+              <a href="#" class="inline-block mt-4 bg-green-500 text-white py-2 px-4 rounded-full hover:bg-green-600 transition">Learn More</a>
+          </div>
+          
+          <!-- Feature 2: Free Delivery -->
+          <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+              <img src="/static/images/delivery.png" alt="Free Delivery" class="w-full h-40 object-cover mb-4 rounded transform hover:scale-105 transition-transform duration-300">
+              <i class="fas fa-shipping-fast text-blue-600 text-4xl mb-4"></i>
+              <h3 class="text-2xl font-bold mb-2">Free Delivery</h3>
+              <p class="text-gray-600">Enjoy fast and free delivery on all your orders, with no minimum purchase required.</p>
+              <a href="#" class="inline-block mt-4 bg-blue-500 text-white py-2 px-4 rounded-full hover:bg-blue-600 transition">Learn More</a>
+          </div>
+          
+          <!-- Feature 3: Easy Payments -->
+          <div class="bg-gray-100 p-6 rounded-lg shadow-lg">
+              <img src="/static/images/easy.png" alt="Easy Payments" class="w-full h-40 object-cover mb-4 rounded transform hover:scale-105 transition-transform duration-300">
+              <i class="fas fa-credit-card text-yellow-600 text-4xl mb-4"></i>
+              <h3 class="text-2xl font-bold mb-2">Easy Payments</h3>
+              <p class="text-gray-600">Our secure and convenient payment options make checkout a breeze.</p>
+              <a href="#" class="inline-block mt-4 bg-yellow-500 text-white py-2 px-4 rounded-full hover:bg-yellow-600 transition">Learn More</a>
+          </div>
+          
+      </div>
+  </div>
+</section>
+
+
+<section class="py-12 bg-white">
+  <div class="container mx-auto px-6">
+    <!-- Section Heading -->
+    <h2 class="text-4xl font-bold text-center text-gray-800 mb-6">About Us</h2>
+    <p class="text-center text-gray-600 max-w-3xl mx-auto mb-12">
+      Welcome to SuperMarket! We are committed to bringing the best quality products to our customers at affordable prices.
+      Our journey started in 1995 with a small store, and today we proudly serve thousands of customers, offering a wide range of 
+      fresh produce, household items, and more.
+    </p>
+    
+    <!-- Values and Mission Section -->
+    <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+      <!-- Mission -->
+      <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+        <i class="fas fa-bullseye text-4xl text-green-600 mb-4"></i>
+        <h3 class="text-2xl font-semibold mb-4">Our Mission</h3>
+        <p class="text-gray-600">
+          To provide fresh, high-quality products that enrich our customers’ lives while maintaining sustainable and ethical practices.
+        </p>
+      </div>
+
+      <!-- Values -->
+      <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+        <i class="fas fa-heart text-4xl text-green-600 mb-4"></i>
+        <h3 class="text-2xl font-semibold mb-4">Our Values</h3>
+        <p class="text-gray-600">
+          We prioritize honesty, customer satisfaction, and environmental responsibility. We believe in creating a positive shopping experience for everyone.
+        </p>
+      </div>
+
+      <!-- History -->
+      <div class="bg-gray-100 p-6 rounded-lg shadow-lg text-center">
+        <i class="fas fa-history text-4xl text-green-600 mb-4"></i>
+        <h3 class="text-2xl font-semibold mb-4">Our History</h3>
+        <p class="text-gray-600">
+          From humble beginnings to a leading supermarket chain, we have grown by consistently delivering great value and service since 1995.
+        </p>
+      </div>
+    </div>
+
+    <!-- Call-to-Action (Join Our Community) -->
+    <div class="text-center mt-12">
+      <h3 class="text-3xl font-bold text-gray-800 mb-4">Join Our Community</h3>
+      <p class="text-gray-600 max-w-xl mx-auto mb-6">
+        Become a part of our growing family by signing up for our newsletter. Get the latest deals, offers, and news delivered right to your inbox.
+      </p>
+      <a href="#" class="bg-green-600 text-white py-3 px-6 rounded-full hover:bg-green-700 font-semibold">
+        Subscribe Now
+      </a>
+    </div>
+  </div>
+</section>
+      
+
+<!-- Categories Section -->
+<section class="py-12">
+  <h2 class="text-3xl font-bold text-center mb-8">Our Products</h2>
+  
+  <!-- First Row of Products -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto">
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/orang.png" alt="Fruits" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Orange</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/potato.png" alt="Vegetables" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Potato</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/milk.png" alt="Dairy" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Milk</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/samosa.png" alt="Snacks" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Samosa</h3>
+      </div>
+  </div>
+
+  <!-- Second Row of Products -->
+  <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6 max-w-6xl mx-auto pt-3">
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/apple.png" alt="Fruits" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Apple</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/images (1).jpeg" alt="Vegetables" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Savala</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/dairy.png" alt="Dairy" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh ICream</h3>
+      </div>
+      <div class="bg-white p-4 rounded-md shadow-md">
+          <img src="/static/images/snaks.png" alt="Snacks" class="w-full h-40 object-cover rounded-md">
+          <h3 class="mt-2 text-lg font-semibold">Fresh Falafel</h3>
+      </div>
+  </div>
+</section>
+
+
+
+<section style="background-color: black; ">
+    <!-- _______________________________________________ Offers Prodcut Slider _____________________________________________________ -->
+
+<div class="container my-2 py-4">
+    <div class="row justify-content-center">
+      <div class="col-lg-7 col-md-8">
+        <div class="text-center">
+          <h1 class="text-warning" style="font-size: 45px;">Our Categories</h1>
+            <p class="text-light">Lorem ipsum dolor sit amet consectetur adipisicing elit. Necessitatibus, nam dolorum cumque quibusdam iure ipsum repellendus hic assumenda. Corrupti eius neque unde veniam esse deleniti repellat enim praesentium possimus architecto.</p>
+        </div>
+      </div>
+    </div>
+    <br>
+
+    <div class="slider">
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/fruits.png);background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Fruits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/vegetables.png) ;background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Vegetables</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/dairy.png) ;background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Dairy</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/snaks.png);background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Snacks</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/fruits.png) ;background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Fruits</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="mx-3">
+        <div class="card border-0 rounded-0"
+          style="background-image:url(/static/images/vegetables.png);background-size: cover;">
+          <div class="d-flex bg-opacity-25 justify-content-center align-items-end" style="height: 260px">
+            <div class="text-center pb-2 bg-dark w-100 pt-3 bg-opacity-75">
+              <a class="text-white fw-bold">Vegetables</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+   <!-- Customer Reviews Section -->
+<section class="bg-gray-50 py-12">
+  <div class="container mx-auto text-center">
+      <h2 class="text-4xl font-bold text-gray-800 mb-8">Customer Reviews</h2>
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+          
+          <!-- Review 1 -->
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+              <div class="flex items-center mb-4">
+                  <!-- Customer Image -->
+                  <img src="/static/images/MESSI.png" alt="Customer 1" class="w-12 h-12 rounded-full mr-4">
+                  <div class="flex-1">
+                      <!-- Customer Name and Rating -->
+                      <div class="flex justify-between">
+                          <h4 class="font-bold text-lg">John Doe</h4>
+                          <div class="flex text-yellow-500">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star-half-alt"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Review Text -->
+              <p class="text-gray-600">"Amazing service and quality! The fresh and organic section is great."</p>
+          </div>
+          
+          <!-- Review 2 -->
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+              <div class="flex items-center mb-4">
+                  <!-- Customer Image -->
+                  <img src="/static/images/ronaldo.png" alt="Customer 2" class="w-12 h-12 rounded-full mr-4">
+                  <div class="flex-1">
+                      <!-- Customer Name and Rating -->
+                      <div class="flex justify-between">
+                          <h4 class="font-bold text-lg">Jane Smith</h4>
+                          <div class="flex text-yellow-500">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Review Text -->
+              <p class="text-gray-600">"Quick delivery and easy payment options made my shopping experience great!"</p>
+          </div>
+          
+          <!-- Review 3 -->
+          <div class="bg-white p-6 rounded-lg shadow-lg">
+              <div class="flex items-center mb-4">
+                  <!-- Customer Image -->
+                  <img src="/static/images/neymar.png" alt="Customer 3" class="w-12 h-12 rounded-full mr-4">
+                  <div class="flex-1">
+                      <!-- Customer Name and Rating -->
+                      <div class="flex justify-between">
+                          <h4 class="font-bold text-lg">Emily Johnson</h4>
+                          <div class="flex text-yellow-500">
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                              <i class="fas fa-star"></i>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+              <!-- Review Text -->
+              <p class="text-gray-600">"I love the variety of organic products. The payment process is smooth too!"</p>
+          </div>
+          
+      </div>
+  </div>
+</section>
+
+    <!-- Contact Section -->
+<section id="contact" class="bg-gray-50 py-12">
+  <div class="container mx-auto px-6">
+    <h2 class="text-3xl font-bold text-center text-green-600 mb-6">Get in Touch</h2>
+    <p class="text-center text-gray-700 mb-8">We would love to hear from you! Reach out to us for any queries or feedback.</p>
+
+    <div class="max-w-3xl mx-auto bg-white p-8 rounded-lg shadow-md">
+      <form id="contactForm">
+        <!-- Name -->
+        <div class="mb-6">
+          <label for="name" class="block text-sm font-medium text-gray-700">Your Name</label>
+          <input type="text" id="name" name="name" required placeholder="Enter your name" 
+                 class="mt-1 p-3 w-full border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+        </div>
+
+        <!-- Email -->
+        <div class="mb-6">
+          <label for="email" class="block text-sm font-medium text-gray-700">Your Email</label>
+          <input type="email" id="email" name="email" required placeholder="you@example.com" 
+                 class="mt-1 p-3 w-full border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500">
+        </div>
+
+        <!-- Message -->
+        <div class="mb-6">
+          <label for="message" class="block text-sm font-medium text-gray-700">Your Message</label>
+          <textarea id="message" name="message" required rows="4" placeholder="Write your message here..."
+                    class="mt-1 p-3 w-full border rounded-lg focus:ring-2 focus:ring-green-500 focus:border-green-500"></textarea>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="text-center">
+          <button type="submit" class="bg-green-600 text-white font-semibold py-3 px-6 rounded-full hover:bg-green-700 transition-colors">
+            Send Message
+          </button>
+        </div>
+      </form>
+
+      <!-- Success Message -->
+      <p id="successMessage" class="text-center text-green-600 mt-4 hidden">Thank you! Your message has been sent.</p>
+    </div>
+  </div>
+</section>
+
+<!-- Footer Section -->
+<footer class="bg-gray-800 text-white py-8">
+  <div class="container mx-auto grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
+      
+      <!-- Customer Service Section -->
+      <div>
+          <h4 class="font-bold mb-4">Customer Service</h4>
+          <ul>
+              <li><a href="#" class="hover:underline">Contact Us</a></li>
+              <li><a href="#" class="hover:underline">FAQs</a></li>
+              <li><a href="#" class="hover:underline">Shipping Information</a></li>
+          </ul>
+      </div>
+
+      <!-- Company Section -->
+      <div>
+          <h4 class="font-bold mb-4">Company</h4>
+          <ul>
+              <li><a href="#" class="hover:underline">About Us</a></li>
+              <li><a href="#" class="hover:underline">Careers</a></li>
+              <li><a href="#" class="hover:underline">Terms of Service</a></li>
+          </ul>
+      </div>
+
+     <!-- Follow Us Section -->
+<div class="p-4">
+  <h4 class="font-bold mb-4 text-lg md:text-xl">Follow Us</h4>
+  <ul class="flex flex-col sm:flex-row space-x-0 sm:space-x-4 space-y-2 sm:space-y-0">
+      <li><a href="#" class="hover:underline flex items-center"><i class="fab fa-facebook mr-2"></i> Facebook</a></li>
+      <li><a href="#" class="hover:underline flex items-center"><i class="fab fa-twitter mr-2"></i> Twitter</a></li>
+      <li><a href="#" class="hover:underline flex items-center"><i class="fab fa-instagram mr-2"></i> Instagram</a></li>
+  </ul>
+</div>
+
+
+  </div>
+
+  <!-- Copyright Section -->
+  <div class="text-center mt-6 border-t border-gray-600 pt-4">
+      © 2024 SuperMarket. All Rights Reserved.
+  </div>
+</footer>
+
+
+  <!-- ___________ Slick Slider ______________ -->
+  <script src="https://code.jquery.com/jquery-3.4.1.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/jquery.slick/1.6.0/slick.min.js"></script>
+    <!-- Add your JavaScript for the carousel and other interactivity -->
+  <script>
+    let currentIndex = 0;
+    const slides = document.querySelectorAll('.slider-item');
+    const totalSlides = slides.length;
+    let autoplayInterval; // Variable to store the autoplay interval
+
+    function showSlide(index) {
+        slides.forEach((slide, i) => {
+            slide.classList.remove('active');
+            if (i === index) {
+                slide.classList.add('active');
+            }
+        });
+    }
+
+    function nextSlide() {
+        currentIndex = (currentIndex + 1) % totalSlides;
+        showSlide(currentIndex);
+    }
+
+    // Event listeners for the next and previous buttons
+    document.getElementById('next').addEventListener('click', () => {
+        nextSlide();
+        resetAutoplay(); // Reset autoplay on manual slide change
+    });
+
+    document.getElementById('prev').addEventListener('click', () => {
+        currentIndex = (currentIndex - 1 + totalSlides) % totalSlides;
+        showSlide(currentIndex);
+        resetAutoplay(); // Reset autoplay on manual slide change
+    });
+
+    // Function to start autoplay
+    function startAutoplay() {
+        autoplayInterval = setInterval(nextSlide, 3000); // Change slide every 3 seconds
+    }
+
+    // Function to stop autoplay
+    function stopAutoplay() {
+        clearInterval(autoplayInterval);
+    }
+
+    // Function to reset autoplay when manually changing slides
+    function resetAutoplay() {
+        stopAutoplay();
+        startAutoplay();
+    }
+
+    // Initialize the slider
+    showSlide(currentIndex);
+    startAutoplay();
+
+    // JavaScript for Carousel and Cart functionality
+
+    // Example: Cart management
+    let cart = [];
+    function addToCart(productId) {
+        cart.push(productId);
+        document.querySelector('.cart-count').textContent = cart.length;
+    }
+
+
+    document.getElementById('contactForm').addEventListener('submit', function(event) {
+      event.preventDefault();
+      document.getElementById('successMessage').classList.remove('hidden');
+      document.getElementById('contactForm').reset();
+    });
+
+
+  
+</script>
+<script>
+    $('.slider').slick({
+  centerMode: true,
+  dots: true,
+  autoplay: true,
+  centerPadding: '60px',
+  slidesToShow: 3,
+  responsive: [{
+    breakpoint: 768,
+    settings: {
+      arrows: false,
+      centerMode: true,
+      centerPadding: '40px',
+      Infinity: true,
+      slidesToShow: 1
+    },
+  }]
+});
+</script>
+
+<script src="https://cdn.jsdelivr.net/npm/swiper@11/swiper-bundle.min.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Categories - Groco</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+</head>
+<body class="bg-gray-50">
+
+    <!-- Header -->
+    <header class="bg-white shadow-md py-4 px-10">
+        <div class="container mx-auto flex items-center justify-between">
+            <!-- Logo -->
+            <div class="flex items-center space-x-2">
+                <span class="text-2xl font-bold text-gray-800">Groco</span>
+            </div>
+            
+            <!-- Navigation Links -->
+            <nav class="hidden md:flex space-x-6 text-gray-600">
+                <a href="#" class="hover:text-gray-900">Home</a>
+                <a href="#" class="hover:text-gray-900">Products</a>
+                <a href="#" class="hover:text-gray-900">Features</a>
+                <a href="#" class="hover:text-gray-900">Categories</a>
+                <a href="#" class="hover:text-gray-900">Reviews</a>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="py-12">
+        <!-- Categories Section -->
+        <section class="container mx-auto text-center">
+            <h2 class="text-3xl font-bold text-gray-800 mb-4">Product Categories</h2>
+            <p class="text-gray-600 max-w-2xl mx-auto mb-8">
+                Explore a wide range of grocery categories available at Groco. From fresh produce to dairy, find everything you need to stock up your kitchen with ease.
+            </p>
+            
+            <!-- Category Grid -->
+            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <!-- Category 1 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/fruits.png" alt="Fruits" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Fruits</h3>
+                    <p class="text-gray-600">Fresh and seasonal fruits to keep you healthy and energized.</p>
+                </div>
+
+                <!-- Category 2 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/vegetables.png" alt="Vegetables" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Vegetables</h3>
+                    <p class="text-gray-600">Locally sourced vegetables delivered to your doorstep.</p>
+                </div>
+
+                <!-- Category 3 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/dairy.png" alt="Dairy" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Dairy Products</h3>
+                    <p class="text-gray-600">Get the best quality milk, cheese, butter, and more.</p>
+                </div>
+
+                <!-- Category 4 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/snaks.png" alt="Snacks" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Snacks</h3>
+                    <p class="text-gray-600">Delicious snacks for every craving and occasion.</p>
+                </div>
+
+                <!-- Category 5 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/drinks.jpg" alt="Beverages" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Beverages</h3>
+                    <p class="text-gray-600">Refreshing drinks, juices, and more to keep you hydrated.</p>
+                </div>
+
+                <!-- Category 6 -->
+                <div class="bg-white p-6 rounded-lg shadow-md">
+                    <img src="/static/images/snaks.png" alt="Bakery" class="w-full h-40 object-cover rounded-md mb-4">
+                    <h3 class="text-xl font-semibold mb-2">Bakery</h3>
+                    <p class="text-gray-600">Freshly baked bread, cakes, and pastries every day.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="container mx-auto grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            <div>
+                <h4 class="font-bold mb-4">Customer Service</h4>
+                <ul>
+                    <li><a href="#" class="hover:underline">Contact Us</a></li>
+                    <li><a href="#" class="hover:underline">FAQs</a></li>
+                    <li><a href="#" class="hover:underline">Shipping Information</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Company</h4>
+                <ul>
+                    <li><a href="#" class="hover:underline">About Us</a></li>
+                    <li><a href="#" class="hover:underline">Careers</a></li>
+                    <li><a href="#" class="hover:underline">Terms of Service</a></li>
+                </ul>
+            </div>
+            <div>
+                <h4 class="font-bold mb-4">Follow Us</h4>
+                <ul class="flex space-x-4">
+                    <li><a href="#" class="hover:underline"><i class="fab fa-facebook"></i> Facebook</a></li>
+                    <li><a href="#" class="hover:underline"><i class="fab fa-twitter"></i> Twitter</a></li>
+                    <li><a href="#" class="hover:underline"><i class="fab fa-instagram"></i> Instagram</a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="text-center mt-6 border-t border-gray-600 pt-4">
+            © 2024 Groco. All Rights Reserved.
+        </div>
+    </footer>
+
+    <!-- Font Awesome -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/js/all.min.js"></script>
+</body>
+</html>
